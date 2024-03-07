@@ -19,14 +19,14 @@ def serve_image(courseNumber):
     return send_from_directory("images", courseNumber + ".jpg")
 
 
-@app.route("/ready", methods=["GET"])
+@app.route("/api/ready", methods=["GET"])
 def root():
     return {
         "message": "hello, world!"
     }
 
 
-@app.route("/testchatgpt", methods=["GET"])
+@app.route("/api/testchatgpt", methods=["GET"])
 def call_testchatgpt():
     theme = request.args.get("theme")
 
@@ -47,7 +47,7 @@ def call_testchatgpt():
     
     return result.to_json()
 
-@app.route("/chatgpt", methods=["GET"])
+@app.route("/api/chatgpt", methods=["GET"])
 def call_chatgpt():
     theme = request.args.get("theme")
 
