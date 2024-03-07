@@ -3,19 +3,21 @@ from flask import abort, Flask, request, send_from_directory
 import pandas as pd
 import requests
 
-from constant import CHATGPT_SYSTEM_QUERY, CHATGPT_USER_QUERY,CHATGPT_FOOD_QUERY, CHATGPT_ANSWER_QUERY
+from constant import CHATGPT_SYSTEM_QUERY, CHATGPT_USER_QUERY, CHATGPT_FOOD_QUERY, CHATGPT_ANSWER_QUERY
 
 data = pd.read_csv("olle.csv")
-data1 = pd.read_csv("description.csv",sep='\\')
+data1 = pd.read_csv("description.csv", sep='\\')
 
 print(data)
 print(data1)
 
 app = Flask(__name__)
 
+
 @app.route("/images/<path:courseNumber>")
 def serve_image(courseNumber):
-    return send_from_directory("images",courseNumber + ".jpg")
+    return send_from_directory("images", courseNumber + ".jpg")
+
 
 @app.route("/ready", methods=["GET"])
 def root():
@@ -23,13 +25,14 @@ def root():
         "message": "hello, world!"
     }
 
+
 @app.route("/testchatgpt", methods=["GET"])
 def call_testchatgpt():
     theme = request.args.get("theme")
 
     if not theme:
         abort(400)
-    
+
     number = 6
     result = data[data["올레길 코스 번호"] == (str(number) + "코스")]
     result = result.iloc[0]
@@ -104,6 +107,7 @@ def call_chatgpt():
     
     return "ERROR-NOTRY"
 
+
 @app.route("/api/chatgpt2", methods=["GET"])
 def call_chatgpt2():
     food = request.args.get("food")
@@ -141,7 +145,7 @@ def call_chatgpt2():
     # response.raise_for_status()
     return response.json()
 
- # Custom CORS middleware
+# Custom CORS middleware
 @app.after_request
 def add_cors_headers(response):
     # Allow requests from any origin
@@ -157,5 +161,3 @@ def add_cors_headers(response):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-    
