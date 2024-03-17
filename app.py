@@ -1,7 +1,6 @@
-import base64
 from flask import Blueprint, abort, Flask, request, send_from_directory
-import pandas as pd
 import requests
+from course_response import course_response
 
 from constant import (
     CHATGPT_SYSTEM_QUERY,
@@ -10,40 +9,12 @@ from constant import (
     CHATGPT_ANSWER_QUERY,
 )
 
-data = pd.read_csv("data/olle.csv")
-data1 = pd.read_csv("data/description.csv", sep="\\")
-print(data)
-print(data1)
-
 api_bp = Blueprint("api", __name__, url_prefix="/api")
-
-
-@api_bp.route("/images/<path:courseNumber>")
-def serve_image(courseNumber):
-    return send_from_directory("images", courseNumber + ".jpg")
 
 
 @api_bp.route("/ready", methods=["GET"])
 def ready():
     return {"message": "hello, world!"}
-
-
-def course_info(courseNum):
-    result = data[data["올레길 코스 번호"] == (courseNum + "코스")]
-    result = result.iloc[0]
-
-    description = data1[data1["course"] == (courseNum)]
-    description = description.iloc[0]["description"]
-    result["description"] = description
-
-    with open("images/" + courseNum + ".png", "rb") as f:
-        encoded_image = base64.b64encode(f.read())
-        result["image"] = encoded_image
-    with open("image2/" + courseNum + "Struc.png", "rb") as f1:
-        encoded_image2 = base64.b64encode(f1.read())
-        result["image2"] = encoded_image2
-
-    return result.to_json()
 
 
 @api_bp.route("/testchatgpt", methods=["GET"])
@@ -53,7 +24,7 @@ def call_testchatgpt():
     if not theme:
         abort(400)
 
-    return course_info("6")
+    return course_response("6")
 
 
 @api_bp.route("/chatgpt", methods=["GET"])
@@ -87,7 +58,7 @@ def call_chatgpt():
     result = response.json()
     try:
         courseNum = result["choices"][0]["message"]["content"]
-        return course_info(courseNum)
+        return course_response(courseNum)
     except:
         return "ERROR"
 
