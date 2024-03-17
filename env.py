@@ -16,7 +16,7 @@ class Env:
             load_dotenv(".env.development")
 
         load_dotenv(".secret")
-        self.OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+        # self.OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
     def __str__(self) -> str:
         return "\n".join(
