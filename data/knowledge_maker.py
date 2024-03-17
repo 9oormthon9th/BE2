@@ -41,7 +41,7 @@ def list_courses():
 
 def create_knowledge():
     """Creates knowledge base for the chatbot"""
-    with open("data/knowledge.md", "w") as file:
+    with open("data/knowledge.md", "w", encoding="utf-8") as file:
         for course in available_courses:
             file.write(f"# {course}\n\n")
             file.write(f"{get_description(course)}\n\n")
