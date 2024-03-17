@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, Flask, request, send_from_directory
+from flask import Blueprint, abort, Flask, request
 import requests
 from course_response import course_response
 
@@ -110,7 +110,13 @@ def add_cors_headers(response):
     return response
 
 
-if __name__ == "__main__":
+def create_app():
     app = Flask(__name__)
     app.register_blueprint(api_bp)
+    return app
+
+
+if __name__ == "__main__":
+    # For local development
+    app = create_app()
     app.run(host="0.0.0.0", port=5000)
