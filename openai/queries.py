@@ -8,7 +8,7 @@ Make the query as short as possible. Do NOT include any other text than single n
 
 
 CHATGPT_USER_QUERY = """이제 다음의 질문에 대해 답하십시오.
-유저가 원하는 올레길 테마: “{theme}”"""
+유저가 원하는 올레길 테마: “{user_input}”"""
 
 CHATGPT_FOOD_QUERY = """You are a classifier that categorizes food menus into breakfast, lunch, and dinner.
                 Select 3 items from the food menus entered by the user and classify them as breakfast, lunch, or dinner.
@@ -19,4 +19,4 @@ CHATGPT_FOOD_QUERY = """You are a classifier that categorizes food menus into br
                 Example: 김밥, 고기국수, 돼지고기
 """
 
-CHATGPT_ANSWER_QUERY = """Please select the 3 most suitable foods for breakfast, lunch, and dinner from the menu '${menu}' and provide the names of the menus."""
+CHATGPT_ANSWER_QUERY = """Please select the 3 most suitable foods for breakfast, lunch, and dinner from the menu '${user_input}' and provide the names of the menus."""
