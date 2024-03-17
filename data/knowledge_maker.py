@@ -41,10 +41,14 @@ def list_courses():
 
 def create_knowledge():
     """Creates knowledge base for the chatbot"""
-    with open("data/knowledge.md", "w", encoding="utf-8") as file:
+    with open("data/knowledge.json", "w", encoding="utf-8") as file:
+        file.write("[\n")
         for course in available_courses:
-            file.write(f"# {course}\n\n")
-            file.write(f"{get_description(course)}\n\n")
+            file.write("{\n")
+            file.write(f"  courseCode:{course},\n")
+            file.write(f"  description:{get_description(course)}\n")
+            file.write("},\n")
+        file.write("]\n")
 
 
 if __name__ == "__main__":
