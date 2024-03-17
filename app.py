@@ -1,14 +1,6 @@
 from flask import Blueprint, abort, Flask, request
-import requests
 from course_response import course_response
-
-from constant import (
-    CHATGPT_SYSTEM_QUERY,
-    CHATGPT_USER_QUERY,
-    CHATGPT_FOOD_QUERY,
-    CHATGPT_ANSWER_QUERY,
-)
-from env import env
+from openai.recommend import recommend_course, recommend_food
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -18,87 +10,37 @@ def ready():
     return {"message": "hello, world!"}
 
 
-@api_bp.route("/testchatgpt", methods=["GET"])
-def call_testchatgpt():
+@api_bp.route("/test/course", methods=["GET"])
+def mock_course():
     theme = request.args.get("theme")
 
     if not theme:
         abort(400)
 
-    return course_response("6")
+    courseCode = "6"
+    return course_response(courseCode)
 
 
-@api_bp.route("/chatgpt", methods=["GET"])
-def call_chatgpt():
+@api_bp.route("/course", methods=["GET"])
+def gpt_course():
     theme = request.args.get("theme")
 
     if not theme:
         abort(400)
 
-    response = requests.post(
-        url="https://api.openai.com/v1/chat/completions",
-        headers={"Authorization": "Bearer AA"},
-        json={
-            "model": "gpt-4",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": CHATGPT_SYSTEM_QUERY,
-                },
-                {"role": "user", "content": CHATGPT_USER_QUERY.format(theme=theme)},
-            ],
-            "temperature": 0,
-        },
-        proxies=(
-            {
-                "http": "http://krmp-proxy.9rum.cc:3128",
-                "https": "http://krmp-proxy.9rum.cc:3128",
-            }
-            if env.isProduction
-            else None
-        ),
-    )
-
-    # response.raise_for_status()
-    result = response.json()
-    try:
-        courseCode = result["choices"][0]["message"]["content"]
-        return course_response(courseCode)
-    except:
-        return "ERROR"
-
-    return "ERROR-NOTRY"
+    courseCode = recommend_course(user_input=theme)
+    return course_response(courseCode)
 
 
-@api_bp.route("/chatgpt2", methods=["GET"])
-def call_chatgpt2():
+@api_bp.route("/food", methods=["GET"])
+def gpt_food():
     food = request.args.get("food")
 
     if not food:
         abort(400)
 
-    response = requests.post(
-        url="https://api.openai.com/v1/chat/completions",
-        headers={"Authorization": "Bearer AA"},
-        json={
-            "model": "gpt-4",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": CHATGPT_FOOD_QUERY,
-                },
-                {"role": "user", "content": CHATGPT_ANSWER_QUERY.format(food=food)},
-            ],
-            "temperature": 0,
-        },
-        proxies={
-            "http": "http://krmp-proxy.9rum.cc:3128",
-            "https": "http://krmp-proxy.9rum.cc:3128",
-        },
-    )
-
-    # response.raise_for_status()
-    return response.json()
+    result = recommend_food(user_input=food)
+    return result
 
 
 # Custom CORS middleware

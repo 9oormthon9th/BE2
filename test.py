@@ -1,3 +1,3 @@
-from course_response import course_response
+from openai.recommend import recommend_course
 
-course_response("6")
+print(recommend_course("산"))
