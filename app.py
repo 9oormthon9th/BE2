@@ -57,8 +57,8 @@ def call_chatgpt():
     # response.raise_for_status()
     result = response.json()
     try:
-        courseNum = result["choices"][0]["message"]["content"]
-        return course_response(courseNum)
+        courseCode = result["choices"][0]["message"]["content"]
+        return course_response(courseCode)
     except:
         return "ERROR"
 
