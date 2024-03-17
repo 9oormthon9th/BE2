@@ -11,5 +11,7 @@ RUN pip install -r requirements.txt
 # 서버가 실행될 때 사용되는 포트
 EXPOSE 5000
 
-# 컨테이너를 시작할 때 Python 스크립트를 실행
+ENV ENV=production
+
+# 컨테이너를 시작할 때 서버 실행
 CMD ["waitress-serve", "--port=5000", "--call", "app:create_app"]

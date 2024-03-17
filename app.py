@@ -8,6 +8,7 @@ from constant import (
     CHATGPT_FOOD_QUERY,
     CHATGPT_ANSWER_QUERY,
 )
+from env import env
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -48,10 +49,14 @@ def call_chatgpt():
             ],
             "temperature": 0,
         },
-        proxies={
-            "http": "http://krmp-proxy.9rum.cc:3128",
-            "https": "http://krmp-proxy.9rum.cc:3128",
-        },
+        proxies=(
+            {
+                "http": "http://krmp-proxy.9rum.cc:3128",
+                "https": "http://krmp-proxy.9rum.cc:3128",
+            }
+            if env.isProduction
+            else None
+        ),
     )
 
     # response.raise_for_status()
