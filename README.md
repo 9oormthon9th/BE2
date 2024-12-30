@@ -2,7 +2,8 @@
 
 This repository is for the backend of the project '걸엉가게'.
 
-- [Frontend Repository](https://github.com/9oormthon9th/FE): Landing page README for the project.
+- [Landing Page](https://github.com/9oormthon9th/FE)
+- [Frontend Repository](https://github.com/9oormthon9th/FE/blob/main/README2.md)
 - Backend: This repository.
 - [Deployment Repository](https://github.com/9oormthon9th/Deployment): Deployment on DKOS.
 
