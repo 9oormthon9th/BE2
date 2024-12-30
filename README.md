@@ -8,32 +8,33 @@ This repository is for the backend of the project '걸엉가게'.
 
 ## Installation
 
+> [!NOTE]
+> This project uses Python 3.6 as D2Hub had a Python 3.6 image available back then. <br>
+> If you don't have Python 3.6 installed, you can use [pyenv](https://github.com/pyenv/pyenv) to install it.
+
 1. Clone the git repository:
    ```bash
-   $ git clone https://github.com/9oormthon9th/BE2.git
-   $ cd BE2
+   git clone https://github.com/9oormthon9th/BE2.git
+   cd BE2
    ```
 2. Install Python 3.6 and select it:
-
    ```bash
-   $ pyenv install 3.6.15
-   $ pyenv shell 3.6.15
+   pyenv install 3.6.15
+   pyenv shell 3.6.15
    ```
-
-   > [!NOTE]  
-   > This project uses Python 3.6 as D2Hub had a Python 3.6 image available back then. If you don't have Python 3.6 installed, you can use [pyenv](https://github.com/pyenv/pyenv) to install it.
-
 3. Create a virtual environment for the project:
+
+   As python 3.6 is selected, `python3` and `pip3` commands will use python 3.6
    ```bash
-   # As python 3.6 is selected, `python3` and `pip3` commands will use python 3.6
-   $ pip3 install virtualenv
-   $ python3 -m virtualenv my_env
-     created virtual environment CPython3.6.15.final.0-64 in 271ms
+   pip3 install virtualenv
+   python3 -m virtualenv my_env
+   # => created virtual environment CPython3.6.15.final.0-64 in 271ms
    ```
-4. Activate the virtual environment and install dependencies:
+5. Activate the virtual environment and install dependencies:
    ```bash
-   $ source my_env/bin/activate
-   (my_env) $ pip3 install -r requirements.txt
+   source my_env/bin/activate
+   # In my_env environment, do following
+   pip3 install -r requirements.txt
    ```
 
 ## Usage
